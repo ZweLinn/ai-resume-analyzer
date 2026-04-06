@@ -158,9 +158,15 @@ form {
 
   /* ─── Resume card ─── */
   .resume-card {
-    @apply flex flex-col gap-8 h-[560px] w-[350px] lg:w-[430px] xl:w-[490px] rounded-2xl p-4;
+    @apply flex flex-col gap-4 h-auto w-[350px] lg:w-[430px] xl:w-[490px] rounded-2xl p-4 transition-all duration-300 cursor-pointer;
     background: var(--color-cream);
     border: 1px solid #ddd0c0;
+  }
+
+  .resume-card:hover {
+    box-shadow: 0 8px 24px rgba(92, 61, 46, 0.12);
+    border-color: var(--color-terra);
+    transform: translateY(-4px);
   }
 
   .resume-card-header {
