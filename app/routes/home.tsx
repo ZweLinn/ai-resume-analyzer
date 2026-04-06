@@ -1,3 +1,4 @@
+import Navbar from "~/components/Navbar";
 import type { Route } from "./+types/home";
 
 
@@ -11,6 +12,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Home() {
   return (
     <main className='main-section'>
+      <Navbar/>
       <section className="main-section">
         <div className="page-heading">
           <h1>Welcome to CVision</h1>
