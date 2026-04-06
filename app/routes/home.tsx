@@ -15,9 +15,12 @@ export default function Home() {
   return (
     <main className="bg-[url('/images/bg-main.svg')] bg-cover">
       <Navbar/>
-      <section className="main-section">
+      <section className="main-section py-16">
         <div className="page-heading">
           <h1>Welcome to CVision</h1>
+          <h2 >
+            Optimize your resume with AI-powered analysis. Get actionable insights on ATS compatibility, tone, structure, and more.
+          </h2>
         </div>
         {
           resumes.length > 0 && (
