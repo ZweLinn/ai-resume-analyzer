@@ -1,15 +1,259 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
+  /* --- Fonts --- */
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "Lora", ui-serif, Georgia, serif;
+
+  /* --- Earthy Palette --- */
+  --color-terra: #c4714a;
+  --color-terra-dark: #a85a36;
+  --color-sand: #f5efe6;
+  --color-sand-dark: #e8ddd0;
+  --color-olive: #6b7c4e;
+  --color-olive-light: #8a9e64;
+  --color-brown: #5c3d2e;
+  --color-muted: #8a7968;
+  --color-cream: #fdf8f2;
+
+  /* --- Semantic badge colors (earthy remapped) --- */
+  --color-badge-green: #dce8da;
+  --color-badge-red: #f5ddd9;
+  --color-badge-yellow: #f5eacc;
+  --color-badge-olive: #dde8cc;
+  --color-badge-green-text: #2d5c29;
+  --color-badge-red-text: #7a3028;
+  --color-badge-yellow-text: #7a5020;
+  --color-badge-olive-text: #3d5225;
+
+  /* kept for any dark-200 references elsewhere */
+  --color-dark-200: #8a7968;
+
+  /* light-blue slots repurposed as warm tints */
+  --color-light-blue-100: #e5d4be1a;
+  --color-light-blue-200: #c4714a4d;
 }
 
+/* ─── Base ─────────────────────────────────────────────────── */
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  @apply bg-sand;
+  color: #2e1f14;
+}
 
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
+main {
+  @apply min-h-screen pt-10;
+}
+
+/* ─── Typography ────────────────────────────────────────────── */
+h1 {
+  font-family: var(--font-serif);
+  @apply max-sm:text-[3rem] text-6xl text-gradient leading-tight xl:tracking-[-1px] font-semibold;
+}
+
+h2 {
+  font-family: var(--font-sans);
+  @apply max-sm:text-xl text-3xl font-light;
+  color: var(--color-muted);
+}
+
+label {
+  font-family: var(--font-sans);
+  color: var(--color-muted);
+}
+
+/* ─── Form elements ─────────────────────────────────────────── */
+input {
+  @apply w-full p-4 rounded-2xl focus:outline-none;
+  background: var(--color-cream);
+  box-shadow:
+    inset 0 0 0 1.5px #ddd0c0,
+    inset 0 2px 6px rgba(140, 100, 60, 0.1);
+}
+
+textarea {
+  @apply w-full p-4 rounded-2xl focus:outline-none;
+  background: var(--color-cream);
+  box-shadow:
+    inset 0 0 0 1.5px #ddd0c0,
+    inset 0 2px 6px rgba(140, 100, 60, 0.1);
+}
+
+form {
+  @apply flex flex-col items-start gap-8 w-full;
+}
+
+/* ─── Component layer ───────────────────────────────────────── */
+@layer components {
+  /* Heading gradient: terracotta → brown → olive */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      100deg,
+      #c4714a 0%,
+      #5c3d2e 50%,
+      #6b7c4e 100%
+    );
+  }
+
+  /* Warm tint border card */
+  .gradient-border {
+    background: linear-gradient(
+      to bottom,
+      rgba(229, 212, 190, 0.25),
+      rgba(196, 113, 74, 0.18)
+    );
+    border: 1px solid #ddd0c0;
+    @apply p-4 rounded-2xl;
+  }
+
+  /* Primary terracotta button */
+  .primary-button {
+    @apply primary-gradient text-cream rounded-full px-4 py-2 cursor-pointer w-full;
+    font-family: var(--font-sans);
+    font-weight: 500;
+  }
+
+  /* ─── Nav ─── */
+  .resume-nav {
+    @apply flex flex-row justify-between items-center p-4 border-b border-sand-dark;
+  }
+
+  .resume-summary {
+    @apply flex flex-row items-center justify-center p-4 gap-4;
+    .category {
+      background: var(--color-cream);
+      border: 1px solid #ddd0c0;
+      @apply flex flex-row gap-2 items-center rounded-2xl p-4 w-full justify-between;
+    }
+  }
+
+  .back-button {
+    @apply flex flex-row items-center gap-2 border border-sand-dark rounded-lg p-2;
+    background: var(--color-cream);
+  }
+
+  /* Large auth button — uses serif font */
+  .auth-button {
+    @apply primary-gradient rounded-full py-4 px-8 cursor-pointer w-[600px] max-md:w-full text-3xl font-semibold;
+    font-family: var(--font-serif);
+    color: var(--color-cream);
+  }
+
+  /* ─── Layout ─── */
+  .main-section {
+    @apply flex flex-col items-center gap-8 pt-12 max-sm:mx-2 mx-15 pb-5;
+  }
+
+  .page-heading {
+    @apply flex flex-col items-center gap-8 max-w-4xl text-center max-sm:gap-4;
+  }
+
+  .resumes-section {
+    @apply flex flex-wrap max-md:flex-col max-md:gap-4 gap-6 items-start max-md:items-center w-full max-w-[1850px] justify-evenly;
+  }
+
+  /* ─── Resume card ─── */
+  .resume-card {
+    @apply flex flex-col gap-8 h-[560px] w-[350px] lg:w-[430px] xl:w-[490px] rounded-2xl p-4;
+    background: var(--color-cream);
+    border: 1px solid #ddd0c0;
+  }
+
+  .resume-card-header {
+    @apply flex flex-row gap-2 justify-between min-h-[110px] max-sm:flex-col items-center max-md:justify-center max-md:items-center;
+    background: linear-gradient(135deg, #edd9c8 0%, #e0cfba 100%);
+    border-radius: 12px;
+    padding: 12px;
+  }
+
+  /* ─── Feedback ─── */
+  .feedback-section {
+    @apply flex flex-col gap-8 w-1/2 px-8 max-lg:w-full py-6;
+  }
+
+  /* ─── Navbar ─── */
+  .navbar {
+    background: var(--color-cream);
+    border: 1px solid #ddd0c0;
+    @apply flex flex-row justify-between items-center rounded-full p-4 w-full px-10 max-w-[1200px] mx-auto;
+  }
+
+  /* ─── Score badge ─── */
+  .score-badge {
+    @apply flex flex-row items-center justify-center py-1 px-2 gap-4 rounded-[96px];
+  }
+
+  /* ─── Misc ─── */
+  .form-div {
+    @apply flex flex-col gap-2 w-full items-start;
+  }
+
+  .uplader-drag-area {
+    background: var(--color-cream);
+    border: 1.5px dashed #c4b5a5;
+    @apply relative p-8 text-center transition-all duration-700 cursor-pointer rounded-2xl min-h-[208px];
+  }
+
+  .uploader-selected-file {
+    background: var(--color-sand);
+    @apply flex items-center justify-between p-3 rounded-2xl;
+  }
+}
+
+/* ─── Utilities ─────────────────────────────────────────────── */
+
+/* Page background: sand fading to terracotta wash at the bottom */
+@utility bg-gradient {
+  background: linear-gradient(to bottom, #f5efe6 60%, rgba(196, 113, 74, 0.35));
+}
+
+@utility text-gradient {
+  @apply bg-clip-text text-transparent;
+  background-image: linear-gradient(
+    100deg,
+    #c4714a 0%,
+    #5c3d2e 50%,
+    #6b7c4e 100%
+  );
+}
+
+/* Hover tint for cards */
+@utility gradient-hover {
+  background: linear-gradient(
+    to bottom,
+    rgba(229, 212, 190, 0.25),
+    rgba(196, 113, 74, 0.18)
+  );
+}
+
+/* Terracotta primary gradient */
+@utility primary-gradient {
+  background: linear-gradient(160deg, #d4835c, #b05a35);
+  box-shadow: 0px 4px 16px 0px rgba(176, 90, 53, 0.28);
+}
+
+@utility primary-gradient-hover {
+  background: linear-gradient(160deg, #dc9070, #c4714a);
+}
+
+/* Warm inset shadow for inputs */
+@utility inset-shadow {
+  box-shadow:
+    inset 0 0 0 1.5px #ddd0c0,
+    inset 0 2px 6px rgba(140, 100, 60, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+/* ─── Animations ────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
